@@ -22,10 +22,10 @@ class EventMembersController(
     fun getAllByUserId(@PathVariable("userId") userId: Long) = eventService.getAllByUserId(userId)
 
     @PostMapping
-    fun create(@RequestBody request: EventMembersRequest) = eventService.create(request)
+    fun create(@PathVariable("groupId") eventId: Long, @RequestHeader("X-User-Id") userId: Long, @RequestBody request: EventMembersRequest) = eventService.create(eventId, userId, request)
 
     @DeleteMapping("/{eventId}/{userId}")
-    fun delete(@PathVariable("eventId") eventId: Long, @PathVariable("userId") userId: Long ) =
+    fun delete(@PathVariable("eventId") eventId: Long, @RequestHeader("X-User-Id") userId: Long ) =
         eventService.delete(eventId, userId)
 
 }
