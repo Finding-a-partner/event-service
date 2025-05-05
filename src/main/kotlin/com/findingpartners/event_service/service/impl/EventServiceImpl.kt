@@ -12,7 +12,6 @@ import com.findingpartners.event_service.service.client.UserServiceClient
 import com.findingpartners.event_service.util.EventMapper
 import jakarta.ws.rs.NotFoundException
 import org.springframework.stereotype.Service
-import java.sql.Date
 
 @Service
 class EventServiceImpl(
@@ -58,8 +57,8 @@ class EventServiceImpl(
         return mapper.entityToResponse(dao.findById(id).orElseThrow(){ throw RuntimeException("")})
     }
 
-    override fun getByOwnerId (id: Long): List<EventResponse>{
-        val events = dao.findAllByOwnerId(id)
+    override fun getByOwnerId (id: Long, type: OwnerType): List<EventResponse>{
+        val events = dao.findAllByOwnerIdAndOwnerType(id, type)
 
         return events.map { it -> mapper.entityToResponse(it)}
     }

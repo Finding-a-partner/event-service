@@ -1,5 +1,6 @@
 package com.findingpartners.event_service.controller
 
+import com.findingpartners.event_service.enum.OwnerType
 import com.findingpartners.event_service.model.request.EventRequest
 import com.findingpartners.event_service.model.response.OwnerResponse
 import com.findingpartners.event_service.service.EventService
@@ -23,8 +24,8 @@ class EventController(
     fun delete(@PathVariable("id") id: Long) =
         eventService.delete(id)
 
-    @GetMapping("/{ownerId}")
-    fun getByOwnerId(@PathVariable("ownerId") id: Long) = eventService.getByOwnerId(id)
+    @GetMapping("/{ownerType}/{ownerId}")
+    fun getByOwnerId(@PathVariable("ownerId") id: Long, @PathVariable("ownerType") type: OwnerType) = eventService.getByOwnerId(id, type)
 
     @GetMapping("/{eventId}/owner")
     fun getEventOwner(@PathVariable eventId: Long): OwnerResponse {
