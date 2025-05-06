@@ -1,4 +1,4 @@
-package com.findingpartners.user_service.logging
+package com.findingpartners.event_service.logging
 
 import org.slf4j.LoggerFactory
 

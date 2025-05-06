@@ -3,9 +3,8 @@ package com.findingpartners.event_service.database.entity
 import com.findingpartners.event_service.enum.OwnerType
 import com.findingpartners.event_service.enum.Visibility
 import jakarta.persistence.*
-import java.sql.Date
-import java.sql.Time
 import java.time.LocalDate
+import java.time.LocalTime
 
 @Entity
 @Table(name = "event")
@@ -15,7 +14,7 @@ class Event(
 
     @Column(name = "owner_type")
     @Enumerated(EnumType.STRING)
-    var ownerType: OwnerType, // тут тоже enum
+    var ownerType: OwnerType,
 
     @Column(nullable = false)
     var title: String,
@@ -25,11 +24,11 @@ class Event(
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    var visibility: Visibility, // скорее всего enum будет
+    var visibility: Visibility,
 
     @Column
     var date: LocalDate,
 
     @Column
-    var time: Time
+    var time: LocalTime,
 ) : AbstractEntity()

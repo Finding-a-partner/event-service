@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody
 
 data class User(
     val id: Long,
-    val type: OwnerType,
     val login: String,
     val name: String,
     val surname: String,

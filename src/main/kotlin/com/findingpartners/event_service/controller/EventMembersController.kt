@@ -1,16 +1,13 @@
 package com.findingpartners.event_service.controller
 
 import com.findingpartners.event_service.model.request.EventMembersRequest
-import com.findingpartners.event_service.model.request.EventRequest
-import com.findingpartners.event_service.model.response.OwnerResponse
 import com.findingpartners.event_service.service.EventMembersService
-import com.findingpartners.event_service.service.EventService
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/event/members")
+@RequestMapping("/event-members")
 class EventMembersController(
-    val eventService: EventMembersService
+    val eventService: EventMembersService,
 ) {
     @GetMapping()
     fun getAll() = eventService.getAll()
@@ -25,7 +22,6 @@ class EventMembersController(
     fun create(@RequestBody request: EventMembersRequest) = eventService.create(request)
 
     @DeleteMapping("/{eventId}/{userId}")
-    fun delete(@PathVariable("eventId") eventId: Long, @PathVariable("userId") userId: Long ) =
+    fun delete(@PathVariable("eventId") eventId: Long, @PathVariable("userId") userId: Long) =
         eventService.delete(eventId, userId)
-
 }

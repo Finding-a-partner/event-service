@@ -1,11 +1,11 @@
-package com.findingpartners.user_service.errors
+package com.findingpartners.event_service.errors
 
-import org.springframework.http.HttpStatus
-import java.time.LocalDateTime
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-import com.findingpartners.user_service.logging.FreelancingLogger
+import com.findingpartners.event_service.logging.FreelancingLogger
+import org.springframework.http.HttpStatus
+import java.time.LocalDateTime
 
 @JsonIgnoreProperties("localizedMessage", "cause", "stackTrace", "suppressed")
 open class ApiError(

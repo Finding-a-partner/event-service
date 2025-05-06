@@ -1,13 +1,11 @@
 package com.findingpartners.event_service.service.client
 
-import com.findingpartners.event_service.enum.OwnerType
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 
-data class Group (
+data class Group(
     val id: Long,
-    val type: OwnerType,
     val name: String,
 )
 

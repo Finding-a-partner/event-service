@@ -3,31 +3,27 @@ package com.findingpartners.event_service.service.impl
 import com.findingpartners.event_service.database.entity.EventMembers
 import com.findingpartners.event_service.database.repository.EventDao
 import com.findingpartners.event_service.database.repository.EventMembersDao
+import com.findingpartners.event_service.errors.ResourceNotFoundException
 import com.findingpartners.event_service.model.request.EventMembersRequest
-import com.findingpartners.event_service.model.request.EventRequest
 import com.findingpartners.event_service.model.response.EventMembersResponse
 import com.findingpartners.event_service.model.response.EventResponse
 import com.findingpartners.event_service.model.response.MemberResponse
-import com.findingpartners.event_service.model.response.OwnerResponse
 import com.findingpartners.event_service.service.EventMembersService
-import com.findingpartners.event_service.service.EventService
 import com.findingpartners.event_service.service.client.UserServiceClient
 import com.findingpartners.event_service.util.EventMapper
 import com.findingpartners.event_service.util.EventMembersMapper
-import com.findingpartners.user_service.errors.ResourceNotFoundException
 import org.springframework.stereotype.Service
 
 @Service
-class EventMembersServiceImpl (
+class EventMembersServiceImpl(
     val eventDao: EventDao,
     val dao: EventMembersDao,
     val mapper: EventMembersMapper,
     val eventMapper: EventMapper,
-    val userService: UserServiceClient
-    ): EventMembersService
-{
+    val userService: UserServiceClient,
+) : EventMembersService {
     override fun getAll(): List<EventMembersResponse> {
-        return dao.findAll().map { mapper.entityToResponse(it)}
+        return dao.findAll().map { mapper.entityToResponse(it) }
     }
 
     override fun getAllByEventId(eventId: Long): List<MemberResponse> {
@@ -45,7 +41,7 @@ class EventMembersServiceImpl (
                     id = user.id,
                     login = user.login,
                     name = user.name,
-                    surname = user.surname
+                    surname = user.surname,
                 )
             }
         }
@@ -70,7 +66,6 @@ class EventMembersServiceImpl (
         )
 
         return mapper.entityToResponse(dao.save(entity))
-
     }
 
     override fun delete(eventId: Long, userId: Long) {
@@ -78,5 +73,4 @@ class EventMembersServiceImpl (
             .orElseThrow { ResourceNotFoundException("Membership not found for user $userId in event $eventId") }
         dao.delete(eventMember)
     }
-
 }

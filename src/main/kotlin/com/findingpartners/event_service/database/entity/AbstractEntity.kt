@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.MappedSuperclass
 import org.hibernate.annotations.CreationTimestamp
-import java.time.LocalDateTime
+import java.time.OffsetDateTime
 
 @MappedSuperclass
 abstract class AbstractEntity(
@@ -16,5 +16,5 @@ abstract class AbstractEntity(
 ) {
     @Column(name = "created_at")
     @CreationTimestamp
-    val createdAt: LocalDateTime = LocalDateTime.now()
+    val createdAt: OffsetDateTime = OffsetDateTime.now()
 }

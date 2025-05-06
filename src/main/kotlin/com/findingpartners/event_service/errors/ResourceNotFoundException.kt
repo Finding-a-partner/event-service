@@ -1,4 +1,4 @@
-package com.findingpartners.user_service.errors
+package com.findingpartners.event_service.errors
 
 import org.springframework.http.HttpStatus
 
