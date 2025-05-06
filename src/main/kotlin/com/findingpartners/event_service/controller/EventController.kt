@@ -1,6 +1,7 @@
 package com.findingpartners.event_service.controller
 
 import com.findingpartners.event_service.model.request.EventRequest
+import com.findingpartners.event_service.model.response.OwnerResponse
 import com.findingpartners.event_service.service.EventService
 import org.springframework.web.bind.annotation.*
 
@@ -27,6 +28,9 @@ class EventController(
     @DeleteMapping("/{id}")
     fun delete(@PathVariable("id") id: Long) = eventService.delete(id)
 
-    @GetMapping("/{ownerId}/owner")
-    fun getByOwnerId(@PathVariable("ownerId") id: Long) = eventService.getByOwnerId(id)
+    @GetMapping("/{ownerType}/{ownerId}")
+    fun getByOwnerId(@PathVariable("ownerId") id: Long, @PathVariable("ownerType") type: OwnerType) = eventService.getByOwnerId(id, type)
+
+}
+
 }

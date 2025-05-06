@@ -56,12 +56,12 @@ class EventMembersServiceImpl(
         }
     }
 
-    override fun create(request: EventMembersRequest): EventMembersResponse {
-        val event = eventDao.findById(request.eventId)
-            .orElseThrow { ResourceNotFoundException("Event not found with id: ${request.eventId}") }
+    override fun create(eventId: Long, userId: Long, request: EventMembersRequest): EventMembersResponse {
+        val event = eventDao.findById(eventId)
+            .orElseThrow { ResourceNotFoundException("Event not found with id: ${eventId}") }
 
         val entity = EventMembers(
-            userId = request.userId, // Создаем proxy объекта User
+            userId = userId, // Создаем proxy объекта User
             event = event,
         )
 
