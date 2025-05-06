@@ -31,4 +31,10 @@ class EventController(
     @GetMapping("/{ownerType}/{ownerId}")
     fun getByOwnerId(@PathVariable("ownerId") id: Long, @PathVariable("ownerType") type: OwnerType) =
         eventService.getByOwnerId(id, type)
+
+    @PostMapping("/{ownerType}/batch")
+    fun getByOwnerTypeBatch(
+        @PathVariable("ownerType") type: OwnerType,
+        @RequestBody ids: List<Long>,
+    ) = eventService.getByOwnerIds(ids, type)
 }

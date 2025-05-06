@@ -55,11 +55,13 @@ class EventServiceImpl(
         )
         val savedEvent = dao.save(event)
 
-        val owner = EventMembers(
-            userId = request.ownerId,
-            event = event,
-        )
-        memberDao.save(owner)
+        if (request.ownerType == OwnerType.USER) {
+            val owner = EventMembers(
+                userId = request.ownerId,
+                event = event,
+            )
+            memberDao.save(owner)
+        }
 
         return mapper.entityToResponse(dao.save(savedEvent))
     }
@@ -76,5 +78,11 @@ class EventServiceImpl(
         val events = dao.findAllByOwnerIdAndOwnerType(id, type)
 
         return events.map { it -> mapper.entityToResponse(it) }
+    }
+
+    override fun getByOwnerIds(ids: List<Long>, type: OwnerType): List<EventResponse> {
+        val events = dao.findAllByOwnerIdInAndOwnerType(ids, type)
+
+        return events.map { mapper.entityToResponse(it) }
     }
 }
