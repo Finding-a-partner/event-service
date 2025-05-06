@@ -9,6 +9,6 @@ interface EventMembersService {
     fun getAll(): List<EventMembersResponse>
     fun getAllByEventId(eventId: Long): List<MemberResponse>
     fun getAllByUserId(userId: Long): List<EventResponse>
-    fun create(eventId: Long, userId: Long, request: EventMembersRequest): EventMembersResponse
+    fun create(request: EventMembersRequest): EventMembersResponse
     fun delete(eventId: Long, userId: Long)
 }

@@ -8,14 +8,11 @@ import com.findingpartners.event_service.enum.OwnerType
 import com.findingpartners.event_service.errors.ResourceNotFoundException
 import com.findingpartners.event_service.model.request.EventRequest
 import com.findingpartners.event_service.model.response.EventResponse
-import com.findingpartners.event_service.model.response.OwnerResponse
 import com.findingpartners.event_service.service.EventService
 import com.findingpartners.event_service.service.client.GroupServiceClient
 import com.findingpartners.event_service.service.client.UserServiceClient
 import com.findingpartners.event_service.util.EventMapper
-import jakarta.ws.rs.NotFoundException
 import org.springframework.stereotype.Service
-import java.sql.Date
 
 @Service
 class EventServiceImpl(
@@ -25,6 +22,7 @@ class EventServiceImpl(
     val groupServiceClient: GroupServiceClient,
     val memberDao: EventMembersDao,
 ) : EventService {
+
     override fun update(id: Long, request: EventRequest): EventResponse {
         val entity = dao.findById(id).orElseThrow { throw RuntimeException("") }
             .apply {
@@ -74,38 +72,9 @@ class EventServiceImpl(
         return mapper.entityToResponse(dao.findById(id).orElseThrow { throw ResourceNotFoundException(id) })
     }
 
-    override fun getByOwnerId(id: Long): List<EventResponse> {
-        val events = dao.findAllByOwnerId(id)
-    override fun getByOwnerId (id: Long, type: OwnerType): List<EventResponse>{
+    override fun getByOwnerId(id: Long, type: OwnerType): List<EventResponse> {
         val events = dao.findAllByOwnerIdAndOwnerType(id, type)
 
         return events.map { it -> mapper.entityToResponse(it) }
-    }
-
-    override fun getEventOwner(eventId: Long): OwnerResponse {
-        val event = dao.findById(eventId)
-            .orElseThrow { NotFoundException("Event not found") }
-
-        return when (event.ownerType) {
-            OwnerType.USER -> {
-                val user = userServiceClient.getById(event.ownerId)
-                OwnerResponse(
-                    id = user.id,
-                    type = OwnerType.USER,
-                    login = user.login,
-                    name = user.name,
-                    surname = user.surname,
-                )
-            }
-            OwnerType.GROUP -> {
-                val group = groupServiceClient.getGroupById(event.ownerId)
-                OwnerResponse(
-                    id = group.id,
-                    type = OwnerType.GROUP,
-                    name = group.name,
-
-                )
-            }
-        }
     }
 }

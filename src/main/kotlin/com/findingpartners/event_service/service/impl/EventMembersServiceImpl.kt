@@ -22,6 +22,7 @@ class EventMembersServiceImpl(
     val eventMapper: EventMapper,
     val userService: UserServiceClient,
 ) : EventMembersService {
+
     override fun getAll(): List<EventMembersResponse> {
         return dao.findAll().map { mapper.entityToResponse(it) }
     }
@@ -56,12 +57,12 @@ class EventMembersServiceImpl(
         }
     }
 
-    override fun create(eventId: Long, userId: Long, request: EventMembersRequest): EventMembersResponse {
-        val event = eventDao.findById(eventId)
-            .orElseThrow { ResourceNotFoundException("Event not found with id: ${eventId}") }
+    override fun create(request: EventMembersRequest): EventMembersResponse {
+        val event = eventDao.findById(request.eventId)
+            .orElseThrow { ResourceNotFoundException("Event not found with id: ${request.eventId}") }
 
         val entity = EventMembers(
-            userId = userId, // Создаем proxy объекта User
+            userId = request.userId,
             event = event,
         )
 
